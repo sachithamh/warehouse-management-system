@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { useAuth } from '../../lib/hooks/useAuth';
 import { useRouter } from 'next/navigation';

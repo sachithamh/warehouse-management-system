@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { authService } from '../../../lib/firebase/auth';
 import { useAuth } from '../../../lib/hooks/useAuth';

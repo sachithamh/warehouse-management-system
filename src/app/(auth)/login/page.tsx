@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { useAuthStore } from '../../../store/authStore';
 import { useAuth } from '../../../lib/hooks/useAuth';
