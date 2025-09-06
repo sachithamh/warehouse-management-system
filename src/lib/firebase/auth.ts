@@ -7,7 +7,6 @@ import {
   User as FirebaseUser,
   UserCredential,
 } from 'firebase/auth';
-import { useEffect, useState } from 'react';
 import { db } from './config';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import type { UserRole } from '../types/database';
@@ -45,17 +44,5 @@ export const authService = {
   subscribe: (cb: (user: FirebaseUser | null) => void) => onAuthStateChanged(auth, cb),
 };
 
-export const useFirebaseAuth = () => {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsub = authService.subscribe((u) => {
-      setUser(u);
-      setLoading(false);
-    });
-    return () => unsub();
-  }, []);
-
-  return { user, loading };
-};
+// NOTE: React hook logic removed from this module to keep it server-safe.
+// Use the dedicated hook in `lib/hooks/useAuth.ts` for client components.
