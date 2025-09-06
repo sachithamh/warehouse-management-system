@@ -31,6 +31,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await authService.signOut();
     } finally {
+      if (typeof document !== 'undefined') {
+        document.cookie = 'wms_uid=; Max-Age=0; path=/';
+      }
       set({ user: null });
     }
   },
