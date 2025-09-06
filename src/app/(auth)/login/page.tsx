@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuthStore } from '../../../store/authStore';
 import { useAuth } from '../../../lib/hooks/useAuth';
 import Link from 'next/link';
+import { auth } from '../../../lib/firebase/config';
 
 export default function LoginPage() {
   const { signIn, error, loading } = useAuthStore();
@@ -13,6 +14,16 @@ export default function LoginPage() {
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
     await signIn(email, password);
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      // Basic placeholder cookie; in production replace with a secure httpOnly session via server verification
+      document.cookie = `wms_uid=${currentUser.uid}; path=/; max-age=604800`;
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const redirectTo = params.get('redirect') || '/dashboard';
+        window.location.replace(redirectTo);
+      }
+    }
   };
 
   return (

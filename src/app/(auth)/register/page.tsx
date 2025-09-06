@@ -3,6 +3,7 @@ import { authService } from '../../../lib/firebase/auth';
 import { useAuth } from '../../../lib/hooks/useAuth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { auth } from '../../../lib/firebase/config';
 
 export default function RegisterPage() {
   const { user, loading } = useAuth();
@@ -19,6 +20,11 @@ export default function RegisterPage() {
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
     await authService.signUp(email, password, { name });
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      document.cookie = `wms_uid=${currentUser.uid}; path=/; max-age=604800`;
+      router.replace('/dashboard');
+    }
   };
 
   return (
