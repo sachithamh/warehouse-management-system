@@ -97,31 +97,31 @@ export const WarehouseForm: React.FC<Props> = ({ onSuccess, defaultValues, wareh
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-neutral-700">Name</label>
-          <input className="mt-1 w-full rounded border border-neutral-300 px-2 py-1 text-sm" {...register('name')} />
+          <input className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" {...register('name')} />
           {errors.name && <p className="mt-1 text-[10px] text-red-600">Name required</p>}
         </div>
         <div>
           <label className="block text-xs font-medium text-neutral-700">Manager (User ID)</label>
-            <input className="mt-1 w-full rounded border border-neutral-300 px-2 py-1 text-sm" {...register('manager')} />
+            <input className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" {...register('manager')} />
           {errors.manager && <p className="mt-1 text-[10px] text-red-600">Manager required</p>}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-neutral-700">City</label>
-          <input className="mt-1 w-full rounded border border-neutral-300 px-2 py-1 text-sm" {...register('city')} />
+          <input className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" {...register('city')} />
           {errors.city && <p className="mt-1 text-[10px] text-red-600">City required</p>}
         </div>
         <div>
           <label className="block text-xs font-medium text-neutral-700">Country</label>
-          <input className="mt-1 w-full rounded border border-neutral-300 px-2 py-1 text-sm" {...register('country')} />
+          <input className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" {...register('country')} />
           {errors.country && <p className="mt-1 text-[10px] text-red-600">Country required</p>}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-neutral-700">Total Space (m³)</label>
-          <input type="number" className="mt-1 w-full rounded border border-neutral-300 px-2 py-1 text-sm" {...register('totalSpace', { valueAsNumber: true })} />
+          <input type="number" className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/20" {...register('totalSpace', { valueAsNumber: true })} />
           {errors.totalSpace && <p className="mt-1 text-[10px] text-red-600">Provide total space</p>}
         </div>
         <div className="flex items-center gap-2 pt-5">
