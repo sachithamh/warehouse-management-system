@@ -14,7 +14,7 @@ export default function ProductsPage() {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-neutral-900">Products</h1>
+  <h1 className="text-lg font-semibold text-white">Products</h1>
         <button
           onClick={() => { setEditingId(undefined); setShowForm(true); }}
           className="rounded bg-neutral-900 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800"
