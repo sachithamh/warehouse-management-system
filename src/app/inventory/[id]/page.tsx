@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useInventory } from '../../../lib/hooks/useInventory';
 import StockAdjustmentForm from '../../../components/forms/StockAdjustmentForm';
+import { useRealTimeInventory } from '../../../lib/hooks/useRealTimeInventory';
 
 export default function InventoryDetailPage() {
   const params = useParams<{ id: string }>();
@@ -10,6 +11,7 @@ export default function InventoryDetailPage() {
   const item = getItem(params.id);
   const router = useRouter();
   const [showAdjust, setShowAdjust] = useState(false);
+  useRealTimeInventory();
 
   if (loading && !item) return <div className="p-6 text-sm text-neutral-500">Loading...</div>;
   if (!item) return <div className="p-6 text-sm text-neutral-500">Inventory item not found.</div>;

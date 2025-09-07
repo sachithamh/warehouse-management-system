@@ -14,6 +14,7 @@ interface InventoryState {
   addItem: (data: Omit<InventoryItem, 'id' | 'updatedAt' | 'availableQuantity'>) => Promise<string>;
   updateItem: (id: string, data: Partial<InventoryItem>) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
+  setItems: (items: InventoryItem[]) => void;
 }
 
 const COLLECTION = 'inventory';
@@ -65,4 +66,5 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
     await firestoreService.remove(COLLECTION, id);
     set({ items: get().items.filter((i) => i.id !== id) });
   },
+  setItems: (items) => set({ items }),
 }));
