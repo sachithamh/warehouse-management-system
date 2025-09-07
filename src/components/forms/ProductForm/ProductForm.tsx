@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Product } from '../../../lib/types/database';
 import { useProductStore } from '../../../store/productStore';
+import { useImageUpload } from '../../../lib/hooks/useImageUpload';
+import ImageUpload from '../../ui/ImageUpload/ImageUpload';
 
 interface FormValues {
   sku: string;
@@ -45,6 +47,8 @@ export const ProductForm: React.FC<Props> = ({ productId, onSuccess }) => {
   const { addProduct, updateProduct, getProduct } = useProductStore();
   const editing = Boolean(productId);
   const existing = productId ? getProduct(productId) : undefined;
+  const [images, setImages] = React.useState<string[]>(existing?.images || []);
+  const { uploading, uploadFiles } = useImageUpload({ basePath: `products/${productId || 'new'}`, onUploaded: (urls) => setImages((prev) => [...prev, ...urls]) });
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -65,7 +69,7 @@ export const ProductForm: React.FC<Props> = ({ productId, onSuccess }) => {
   });
 
   const onSubmit = async (values: FormValues) => {
-    if (editing && productId) {
+  if (editing && productId) {
       await updateProduct(productId, {
         sku: values.sku,
         name: values.name,
@@ -81,6 +85,7 @@ export const ProductForm: React.FC<Props> = ({ productId, onSuccess }) => {
         basePrice: values.basePrice,
         minOrderQuantity: values.minOrderQuantity,
         isActive: values.isActive,
+    images,
       } as Partial<Product>);
     } else {
       await addProduct({
@@ -96,7 +101,7 @@ export const ProductForm: React.FC<Props> = ({ productId, onSuccess }) => {
           height: values.height,
           weight: values.weight,
         },
-        images: [],
+    images,
         basePrice: values.basePrice,
         minOrderQuantity: values.minOrderQuantity,
         isActive: values.isActive,
@@ -169,6 +174,19 @@ export const ProductForm: React.FC<Props> = ({ productId, onSuccess }) => {
         <label className="block text-xs font-medium text-neutral-700">Description</label>
         <textarea rows={3} className="mt-1 w-full resize-none rounded border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900" {...register('description')} />
         {errors.description && <p className="mt-1 text-[10px] text-red-600">Required</p>}
+      </div>
+      <div>
+        <div className="mb-1 flex items-center justify-between">
+          <label className="block text-xs font-medium text-neutral-700">Images</label>
+          {uploading && <span className="text-[10px] text-neutral-500">Uploading...</span>}
+        </div>
+        <ImageUpload
+          images={images}
+          uploading={uploading}
+          onSelect={async (files) => { await uploadFiles(files); }}
+          onRemove={(url) => setImages((prev) => prev.filter((u) => u !== url))}
+          max={8}
+        />
       </div>
       <div className="pt-2">
         <button
